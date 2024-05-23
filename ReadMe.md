@@ -10,7 +10,12 @@
 [![🔒 Lock Closed Issues](https://github.com/Armoghans-Organization/Phish-Master/actions/workflows/lock.yml/badge.svg)](https://github.com/Armoghans-Organization/Phish-Master/actions/workflows/lock.yml)
 [![⏰ Auto Close Inactive Items](https://github.com/Armoghans-Organization/Phish-Master/actions/workflows/close.yml/badge.svg)](https://github.com/Armoghans-Organization/Phish-Master/actions/workflows/close.yml)
 [![GitHub](https://img.shields.io/github/license/Armoghans-Organization/Phish-Master)](https://github.com/Armoghans-Organization/Phish-Master/blob/main/LICENSE)
+![PhishMaster](https://img.shields.io/badge/PhishMaster-1.0.0-blue)
 ![code-size](https://img.shields.io/github/languages/code-size/Armoghans-Organization/Phish-Master)
+[![Stars](https://img.shields.io/github/stars/Armoghans-Organization/Phish-Master?style=social)](https://github.com/Armoghans-Organization/Phish-Master)
+[![Forks](https://img.shields.io/github/forks/Armoghans-Organization/Phish-Master?style=social)](https://github.com/Armoghans-Organization/Phish-Master)
+
+
 
 ## Overview 🌐
 Phish Master is a powerful phishing tool designed for educational purposes. It allows users to create and deploy custom phishing campaigns to simulate real-world cyber attacks. With Phish Master, users can craft convincing phishing emails or web pages and track interactions to assess their organization's security posture.
