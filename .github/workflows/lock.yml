@@ -1,0 +1,45 @@
+name: "🔒 Lock Closed Issues"
+
+on:
+  schedule:
+    - cron: "0 0 * * 0"
+  workflow_dispatch:
+
+permissions:
+  issues: write
+  pull-requests: write
+
+jobs:
+  action:
+    runs-on: ubuntu-latest
+    concurrency:
+      group: lock  # Added concurrency group
+
+    steps:
+      - name: 🔒 Lock Issues
+        if: github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main')
+        uses: dessant/lock-threads@v3
+        with:
+          process-only: "issues"
+          issue-inactive-days: "10"
+          exclude-any-issue-labels: "enhancement"
+          add-issue-labels: "archived"
+          remove-issue-labels: "stale"
+          issue-lock-reason: "resolved"
+          issue-comment: >
+            This issue has been automatically locked since there
+            has not been any recent activity after it was closed.
+            Please open a new issue for related bugs/questions.
+
+      - name: 📊 Record Locking
+        if: always()
+        uses: actions/github-script@v4
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const fs = require('fs');
+            const data = JSON.stringify({
+              timestamp: new Date().toISOString(),
+              action: 'issues_locked'
+            });
+            fs.appendFileSync('workflow_history.json', `${data}\n`);
