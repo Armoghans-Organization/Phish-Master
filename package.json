@@ -1,0 +1,33 @@
+{
+  "name": "phish-master",
+  "version": "1.0.0",
+  "description": "A user-friendly phishing tool for educational purposes, enabling custom campaign creation and deployment via a web GUI.",
+  "private": true,
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "Phishing",
+    "Cybersecurity",
+    "Digital Forensics",
+    "Web GUI",
+    "Python",
+    "Final-Year Project",
+    "LGU"
+  ],
+  "workspaces": {
+    "packages": [
+      "packages/**/*"
+    ]
+  },
+  "author": "Armoghan-ul-Mohmin",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Armoghans-Organization/Phish-Master.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Armoghans-Organization/Phish-Master/issues"
+  },
+  "homepage": "https://github.com/Armoghans-Organization/Phish-Master#readme"
+}
