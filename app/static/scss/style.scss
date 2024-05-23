@@ -1,8 +1,15 @@
 @charset "UTF-8";
 
+// Import Custom SB Admin 2 Variables (Overrides Default Bootstrap Variables)
 @import "vendors/variables";
 
-@import "vendors/bootswatch";
+// Import Bootstrap
+@import "../node_modules/bootstrap/scss/bootstrap.scss";
+
+// Import Custom SB Admin 2 Mixins and Components
+@import "vendors/mixins";
+
+@import "utilities";
 
 @import "components";
 
