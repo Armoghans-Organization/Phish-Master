@@ -10,4 +10,4 @@ class TerminalClear:
 #                 Usage                     #
 #############################################
 # from clear import TerminalClear 
-# TerminalClear.clear()
+# clear.TerminalClear.clear()

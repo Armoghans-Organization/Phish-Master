@@ -1,3 +1,5 @@
-__all__ = ["clear"]
+__all__ = ["clear", "color"]
 
 from . import clear
+
+from . import color
