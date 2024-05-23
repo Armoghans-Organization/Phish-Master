@@ -4,15 +4,28 @@
   "description": "A user-friendly phishing tool for educational purposes, enabling custom campaign creation and deployment via a web GUI.",
   "private": true,
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "install-all": "npm install && npm run install-requirements && cd app && cd static && npm install",
+    "env": "clear && echo \"RUN: 'source ./venv/bin/activate' To Enter In python Virtual Enviroment.\" && exit 1",
+    "start": "python3 app.py",
+    "DB": "python3 database.py",
+    "requirements": "python3 -m pip freeze > requirements.txt",
+    "install-requirements": "pip install -r requirements.txt",
+    "watch": "sass static/scss/style.scss static/css/style.css --watch",
+    "build": "sass static/scss/style.scss static/css/style.css",
+    "purge-css": "sass static/scss/style.scss static/css/style.css && postcss static/css/style.css -o static/css/style.css"
   },
   "keywords": [
     "Phishing",
+    "Phishing Tool",
     "Cybersecurity",
     "Digital Forensics",
     "Web GUI",
     "Python",
+    "Flask",
+    "Sqlite",
     "Final-Year Project",
+    "Project",
+    "Lahore Garrison University",
     "LGU"
   ],
   "workspaces": {
