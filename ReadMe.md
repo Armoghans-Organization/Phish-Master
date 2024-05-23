@@ -44,7 +44,7 @@ Phish Master is a powerful phishing tool designed for educational purposes. It a
 4. **Run database migrations:**
 Ensure your database schema is up to date by running the migrations from the database.py file.
     ```bash
-      python database.py
+      python app/database.py
     ```
 5. **Run the application:**
     ```bash
