@@ -47,5 +47,5 @@ try:
 except Exception as e:
     print(color.ColorPrinter.red(f"Error creating database: {e}"))
     
-table_names = ['user']
+table_names = ['user' , 'creds']
 create_tables_if_not_exists(db, table_names)
