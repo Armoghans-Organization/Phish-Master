@@ -1,0 +1,51 @@
+name: 💬 Community Engagement
+
+on:
+  pull_request:
+    types: [opened, closed, reopened]
+  issues:
+    types: [opened, closed, reopened]
+  issue_comment:
+    types: [created]
+  pull_request_review:
+    types: [submitted]
+
+jobs:
+  engage:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 📝 Record Activity
+        uses: actions/github-script@v4
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const fs = require('fs');
+            const data = JSON.stringify({
+              timestamp: new Date().toISOString(),
+              action: context.eventName,
+              sender: context.actor,
+              issue_number: context.issue ? context.issue.number : null,
+              issue_title: context.issue ? context.issue.title : null,
+              pull_request_number: context.payload.pull_request ? context.payload.pull_request.number : null,
+              pull_request_title: context.payload.pull_request ? context.payload.pull_request.title : null,
+              comment_body: context.payload.comment ? context.payload.comment.body : null
+            });
+            fs.appendFileSync('community_activity.json', `${data}\n`);
+
+      - name: 📬 Community Interaction
+        run: |
+          if [ "${{ github.event_name }}" == "pull_request" ]; then
+            gh issue comment ${{ github.event.issue.number }} -b "Thank you for opening/pulling this issue! Our team will review it soon. 🙌"
+          elif [ "${{ github.event_name }}" == "issues" ]; then
+            gh issue comment ${{ github.event.issue.number }} -b "Thank you for opening this issue! Our team will review it soon. 🙌"
+          elif [ "${{ github.event_name }}" == "issue_comment" ]; then
+            echo "Received a new comment!"
+          elif [ "${{ github.event_name }}" == "pull_request_review" ]; then
+            gh pr review --approve --comment "Thank you for your contribution! 🚀"
+          else
+            echo "Unknown event"
+          fi
+          gh issue list -L 50 --state open --label "stale" --json number,title | jq -r '.[] | .number' | xargs -I % gh issue close %
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
