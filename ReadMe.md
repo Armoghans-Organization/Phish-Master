@@ -1,7 +1,7 @@
 <h1 align="center">Phish Master 🚀</h1>
 <br>
 
-![logo](logo.png)
+![logo](PhishMaster.png)
 
 
 [![GitHub](https://img.shields.io/github/license/Armoghans-Organization/Phish-Master)](https://github.com/Armoghans-Organization/Phish-Master/blob/main/LICENSE)
