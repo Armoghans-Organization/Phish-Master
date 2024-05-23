@@ -6,8 +6,8 @@
   "scripts": {
     "install-all": "npm install && npm run install-requirements && cd app && cd static && npm install",
     "env": "clear && echo \"RUN: 'source ./venv/bin/activate' To Enter In python Virtual Enviroment.\" && exit 1",
-    "start": "python3 app.py",
-    "DB": "python3 database.py",
+    "start": "python3 app/app.py",
+    "DB": "python3 app/database.py",
     "requirements": "python3 -m pip freeze > requirements.txt",
     "install-requirements": "pip install -r requirements.txt",
     "watch": "sass app/static/scss/style.scss app/static/css/style.css --watch",
