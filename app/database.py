@@ -46,6 +46,10 @@ try:
             print(color.ColorPrinter.yellow("Database already exists"))
 except Exception as e:
     print(color.ColorPrinter.red(f"Error creating database: {e}"))
-    
-table_names = ['user' , 'creds' , 'media' , 'info']
-create_tables_if_not_exists(db, table_names)
+
+########################################################
+# For Debugging 
+########################################################
+
+# table_names = ['user' , 'creds' , 'media' , 'info']
+# create_tables_if_not_exists(db, table_names)
