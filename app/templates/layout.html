@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+
+  <!-- Title -->
+
+  <title>Phish Master | {% block title %} {% endblock %}</title>
+</head>
+
+<body {% block bodyclass %} {% endblock %}>
+  <!-- Body Content Starts -->
+
+  {% block body %} {% endblock %}
+
+  <!-- Body Content Ends -->
+
+  <!-- Main Js -->
+  <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+
+</html>
