@@ -27,6 +27,20 @@ def create_tables_if_not_exists(db, table_names):
     except Exception as e:
         print(color.ColorPrinter.red(f"Error creating tables: {e}"))
     
+
+def create_user():
+    print()
+    print(color.ColorPrinter.cyan("Create a New User!"))
+    print()
+    username = input("Enter username: ")
+    password = input("Enter password: ")
+    # Add new user
+    new_user = user.User(username=username, password=password)
+    db.session.add(new_user)
+    db.session.commit()
+    print()
+    print(color.ColorPrinter.green("User added successfully!"))
+
 clear.TerminalClear.clear()
 banner.print_banner()
 
@@ -47,6 +61,23 @@ try:
 except Exception as e:
     print(color.ColorPrinter.red(f"Error creating database: {e}"))
 
+with app.app_context():
+    # Check if there are any users in the user table
+    user_count = user.User.query.count()
+    if user_count > 0:
+        print()
+        print(color.ColorPrinter.yellow("User already exists"))
+        print()
+        create_new = input("Do you want to create a new user? (yes/no): ").strip().lower()
+        if create_new == 'yes':
+            create_user()
+        else:
+            print()
+            print(color.ColorPrinter.red("Exiting without creating a new user."))
+    else:
+        create_user()
+
+        
 ########################################################
 # For Debugging 
 ########################################################

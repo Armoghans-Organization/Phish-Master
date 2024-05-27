@@ -63,4 +63,4 @@ class Info(db.Model):
     udp_connection_count = db.Column(db.Integer, nullable=True)
 
     def __repr__(self):
-        return f"Info(name='{self.name}', ip='{self.ip}', browser='{self.browser}')"
+        return f"Info(username='{self.username}', ip='{self.ip}', browser='{self.browser}')"
