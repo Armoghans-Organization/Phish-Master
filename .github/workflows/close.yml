@@ -3,7 +3,7 @@ name: "⏰ Auto Close Inactive Items"
 on:
   schedule:
     - cron: "0 0 * * 0"
-  workflow_dispatch:  # Allows manual triggering of the workflow
+  workflow_dispatch: # Allows manual triggering of the workflow
 
 permissions:
   issues: write
@@ -16,13 +16,12 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v2  # Updated to v2 from v4 since v2 is the latest stable version as of my last update
+        uses: actions/checkout@v4 # Updated to v4 to use Node.js 20
 
       - name: Close inactive issues, pull requests, and discussions
-        uses: actions/github-script@v7  # Updated to v7 from v6 since v7 is the latest stable version as of my last update
+        uses: actions/github-script@v7 # Ensure we are using the latest stable version
         with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}  # Added GitHub token for authentication
-
+          github-token: ${{ secrets.GITHUB_TOKEN }} # Added GitHub token for authentication
           script: |
             const owner = context.repo.owner;
             const repo = context.repo.repo;
@@ -65,7 +64,7 @@ jobs:
             }
 
             // Close inactive discussions
-            const discussions = await github.paginate(github.rest.discussions.listForRepo, {
+            const discussions = await github.paginate("GET /repos/{owner}/{repo}/discussions", {
               owner: owner,
               repo: repo,
               state: 'open',
@@ -73,7 +72,7 @@ jobs:
 
             for (const discussion of discussions) {
               if (new Date(discussion.updated_at) < new Date(thirtyDaysAgo)) {
-                await github.rest.discussions.update({
+                await github.request("PATCH /repos/{owner}/{repo}/discussions/{discussion_number}", {
                   owner: owner,
                   repo: repo,
                   discussion_number: discussion.number,
