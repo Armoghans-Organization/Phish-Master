@@ -28,55 +28,67 @@ jobs:
             const thirtyDaysAgo = new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString();
 
             // Close inactive issues
-            const issues = await github.paginate(github.rest.issues.listForRepo, {
-              owner: owner,
-              repo: repo,
-              state: 'open',
-            });
+            try {
+              const issues = await github.paginate(github.rest.issues.listForRepo, {
+                owner: owner,
+                repo: repo,
+                state: 'open',
+              });
 
-            for (const issue of issues) {
-              if (!issue.pull_request && new Date(issue.updated_at) < new Date(thirtyDaysAgo)) {
-                await github.rest.issues.update({
-                  owner: owner,
-                  repo: repo,
-                  issue_number: issue.number,
-                  state: 'closed',
-                });
+              for (const issue of issues) {
+                if (!issue.pull_request && new Date(issue.updated_at) < new Date(thirtyDaysAgo)) {
+                  await github.rest.issues.update({
+                    owner: owner,
+                    repo: repo,
+                    issue_number: issue.number,
+                    state: 'closed',
+                  });
+                }
               }
+            } catch (error) {
+              console.error("Error closing inactive issues:", error);
             }
 
             // Close inactive pull requests
-            const pullRequests = await github.paginate(github.rest.pulls.list, {
-              owner: owner,
-              repo: repo,
-              state: 'open',
-            });
+            try {
+              const pullRequests = await github.paginate(github.rest.pulls.list, {
+                owner: owner,
+                repo: repo,
+                state: 'open',
+              });
 
-            for (const pr of pullRequests) {
-              if (new Date(pr.updated_at) < new Date(thirtyDaysAgo)) {
-                await github.rest.pulls.update({
-                  owner: owner,
-                  repo: repo,
-                  pull_number: pr.number,
-                  state: 'closed',
-                });
+              for (const pr of pullRequests) {
+                if (new Date(pr.updated_at) < new Date(thirtyDaysAgo)) {
+                  await github.rest.pulls.update({
+                    owner: owner,
+                    repo: repo,
+                    pull_number: pr.number,
+                    state: 'closed',
+                  });
+                }
               }
+            } catch (error) {
+              console.error("Error closing inactive pull requests:", error);
             }
 
             // Close inactive discussions
-            const discussions = await github.paginate("GET /repos/{owner}/{repo}/discussions", {
-              owner: owner,
-              repo: repo,
-              state: 'open',
-            });
+            try {
+              const discussions = await github.paginate(github.rest.teams.listDiscussionsInOrg, {
+                org: owner,
+                team_slug: repo, // Note: team_slug needs to be correctly set
+                state: 'open',
+              });
 
-            for (const discussion of discussions) {
-              if (new Date(discussion.updated_at) < new Date(thirtyDaysAgo)) {
-                await github.request("PATCH /repos/{owner}/{repo}/discussions/{discussion_number}", {
-                  owner: owner,
-                  repo: repo,
-                  discussion_number: discussion.number,
-                  state: 'closed',
-                });
+              for (const discussion of discussions) {
+                if (new Date(discussion.updated_at) < new Date(thirtyDaysAgo)) {
+                  await github.rest.teams.updateDiscussionInOrg({
+                    org: owner,
+                    team_slug: repo, // Note: team_slug needs to be correctly set
+                    discussion_number: discussion.number,
+                    state: 'closed',
+                  });
+                }
               }
+            } catch (error) {
+              console.error("Error closing inactive discussions:", error);
             }
