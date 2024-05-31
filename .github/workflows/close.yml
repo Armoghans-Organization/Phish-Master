@@ -21,11 +21,14 @@ jobs:
       - name: Close inactive issues, pull requests, and discussions
         uses: actions/github-script@v7 # Ensure we are using the latest stable version
         with:
-          github-token: ${{ secrets.GITHUB_TOKEN }} # Added GitHub token for authentication
+          github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
             const owner = context.repo.owner;
             const repo = context.repo.repo;
             const thirtyDaysAgo = new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString();
+
+            console.log(`Owner: ${owner}, Repo: ${repo}`);
+            console.log(`Closing items inactive since: ${thirtyDaysAgo}`);
 
             // Close inactive issues
             try {
@@ -35,6 +38,8 @@ jobs:
                 state: 'open',
               });
 
+              console.log(`Found ${issues.length} open issues`);
+
               for (const issue of issues) {
                 if (!issue.pull_request && new Date(issue.updated_at) < new Date(thirtyDaysAgo)) {
                   await github.rest.issues.update({
@@ -43,6 +48,7 @@ jobs:
                     issue_number: issue.number,
                     state: 'closed',
                   });
+                  console.log(`Closed issue #${issue.number}`);
                 }
               }
             } catch (error) {
@@ -57,6 +63,8 @@ jobs:
                 state: 'open',
               });
 
+              console.log(`Found ${pullRequests.length} open pull requests`);
+
               for (const pr of pullRequests) {
                 if (new Date(pr.updated_at) < new Date(thirtyDaysAgo)) {
                   await github.rest.pulls.update({
@@ -65,6 +73,7 @@ jobs:
                     pull_number: pr.number,
                     state: 'closed',
                   });
+                  console.log(`Closed pull request #${pr.number}`);
                 }
               }
             } catch (error) {
@@ -73,20 +82,23 @@ jobs:
 
             // Close inactive discussions
             try {
-              const discussions = await github.paginate(github.rest.teams.listDiscussionsInOrg, {
-                org: owner,
-                team_slug: repo, // Note: team_slug needs to be correctly set
+              const discussions = await github.paginate('GET /repos/{owner}/{repo}/discussions', {
+                owner: owner,
+                repo: repo,
                 state: 'open',
               });
 
+              console.log(`Found ${discussions.length} open discussions`);
+
               for (const discussion of discussions) {
                 if (new Date(discussion.updated_at) < new Date(thirtyDaysAgo)) {
-                  await github.rest.teams.updateDiscussionInOrg({
-                    org: owner,
-                    team_slug: repo, // Note: team_slug needs to be correctly set
+                  await github.request('PATCH /repos/{owner}/{repo}/discussions/{discussion_number}', {
+                    owner: owner,
+                    repo: repo,
                     discussion_number: discussion.number,
                     state: 'closed',
                   });
+                  console.log(`Closed discussion #${discussion.number}`);
                 }
               }
             } catch (error) {
