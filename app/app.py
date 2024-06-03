@@ -14,8 +14,9 @@ app.config.from_object(Config)
 db.init_app(app)
 
 
-# Register the Blueprint
+# Register the Blueprints
 app.register_blueprint(dashboard.dashboard_bp)
+app.register_blueprint(logout.logout_bp)
 
 @app.route("/", methods=['GET', 'POST'])
 def index():
