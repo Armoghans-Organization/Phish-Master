@@ -8,6 +8,10 @@
   <!-- Styles -->
   <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
 
+  <!-- Fontawsome icons-->
+  <link rel="stylesheet"
+    href="{{ url_for('static', filename='node_modules/@fortawesome/fontawesome-free/css/all.css') }}" />
+
   <!-- Title -->
 
   <title>Phish Master | {% block title %} {% endblock %}</title>
@@ -22,6 +26,10 @@
 
   <!-- Main Js -->
   <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+
+  <!-- Bootstrap Js -->
+  <script src="{{ url_for('static', filename='node_modules/bootstrap/dist/js/bootstrap.bundle.js') }}"></script>
+
 </body>
 
 </html>

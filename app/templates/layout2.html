@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet"
+    href="{{ url_for('static', filename='node_modules/@fortawesome/fontawesome-free/css/all.css') }}" />
+
+  <!-- Page Title -->
+  <title>Phish Master | {% block title %} {% endblock %}</title>
+</head>
+
+<body {% block bodyclass %} {% endblock %}>
+  <!-- Page Wrapper -->
+  <div id="wrapper">
+    <!-- Sidebar -->
+    <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion sticky-top" id="accordionSidebar">
+      <!-- Sidebar - Brand -->
+      <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+        <div class="sidebar-brand-icon rotate-n-15">
+          <i class="fa-solid fa-money-check-dollar"></i>
+        </div>
+        <div class="sidebar-brand-text mx-3">Phish Master</div>
+      </a>
+
+      <!-- Divider -->
+      <hr class="sidebar-divider my-0" />
+
+      <!-- Nav Item - Dashboard -->
+      <li class="nav-item">
+        <a class="nav-link" href="/dashboard">
+          <i class="fas fa-fw fa-tachometer-alt"></i>
+          <span>Dashboard</span></a>
+      </li>
+
+      <!-- Sidebar Heading - Pages -->
+      <div class="sidebar-heading">Pages</div>
+
+      <!-- Nav Item - Pre Build -->
+      <li class="nav-item">
+        <a class="nav-link" href="/pages">
+          <i class="fa-solid fa-box-archive"></i>
+          <span>Pre Build</span></a>
+      </li>
+
+      <!-- Nav Item - Custom -->
+      <li class="nav-item">
+        <a class="nav-link" href="/custom">
+          <i class="fa-solid fa-box-open"></i>
+          <span>Custom</span></a>
+      </li>
+
+      <!-- Sidebar Heading - Captured -->
+      <div class="sidebar-heading">Captured</div>
+
+      <!-- Nav Item - Credentials -->
+      <li class="nav-item">
+        <a class="nav-link" href="/credentials">
+          <i class="fa-solid fa-lock"></i>
+          <span>Credentials</span></a>
+      </li>
+
+      <!-- Nav Item - Details -->
+      <li class="nav-item">
+        <a class="nav-link" href="/details">
+          <i class="fa-solid fa-circle-info"></i>
+          <span>Details</span></a>
+      </li>
+
+      <!-- Nav Item - Media -->
+      <li class="nav-item">
+        <a class="nav-link" href="/media">
+          <i class="fa-solid fa-images"></i>
+          <span>Media</span></a>
+      </li>
+
+      <!-- Sidebar Heading - Others -->
+      <div class="sidebar-heading">Others</div>
+
+      <!-- Nav Item - Tunneling -->
+      <li class="nav-item">
+        <a class="nav-link" href="/tunneling">
+          <i class="fa-solid fa-archway"></i>
+          <span>Tunneling</span></a>
+      </li>
+
+      <!-- Nav Item - Settings -->
+      <li class="nav-item">
+        <a class="nav-link" href="/settings">
+          <i class="fas fa-cogs fa-sm fa-fw"></i>
+          <span>Settings</span></a>
+      </li>
+
+      <!-- Nav Item - Forget Password -->
+      <li class="nav-item">
+        <a class="nav-link" href="/forget">
+          <i class="fa-solid fa-unlock"></i>
+          <span>Forget Password</span></a>
+      </li>
+
+      <!-- Nav Item - Logout -->
+      <li class="nav-item">
+        <a type="button" class="nav-link" data-bs-toggle="modal" data-bs-target="#logoutModal">
+          <i class="fas fa-sign-out-alt fa-sm fa-fw"></i>
+          <span>Logout</span></a>
+        </a>
+      </li>
+
+      <!-- Sidebar Toggler -->
+      <div class="text-center d-none d-md-inline">
+        <button class="rounded-circle border-0" id="sidebarToggle"></button>
+      </div>
+    </ul>
+    <!-- End of Sidebar -->
+
+    <!-- Content Wrapper -->
+    <div id="content-wrapper" class="d-flex flex-column">
+      <!-- Main Content -->
+      <div id="content">
+        <!-- Topbar -->
+        <nav class="navbar navbar-light bg-white topbar mb-3 static-top shadow">
+          <!-- Topbar Navbar -->
+          <ul class="navbar-nav ml-auto d-flex align-items-center justify-content-center w-100">
+            <!-- Nav Item - User Information -->
+            <li class="nav-item dropdown no-arrow">
+              <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown"
+                aria-haspopup="true" aria-expanded="false">
+                <h3 class="text-gray-600 text-center mb-0">
+                  Welcome <span>{{ username }}</span>
+                </h3>
+              </a>
+            </li>
+          </ul>
+        </nav>
+
+        <!-- End of Topbar -->
+
+        <!-- Begin Page Content -->
+        <div class="container-fluid">
+          <!-- Body Content Starts -->
+          {% block body %} {% endblock %}
+          <!-- Body Content Ends -->
+        </div>
+      </div>
+      <!-- End of Main Content -->
+
+      <!-- Footer -->
+      <footer class="sticky-footer bg-white">
+        <div class="container my-auto">
+          <div class="copyright text-center my-auto">
+            <span>Copyright &copy; <strong>Phish Master</strong> 2024</span>
+          </div>
+        </div>
+      </footer>
+      <!-- End of Footer -->
+    </div>
+    <!-- End of Content Wrapper -->
+  </div>
+  <!-- End of Page Wrapper -->
+
+  <!-- Scroll to Top Button-->
+  <a class="scroll-to-top rounded" href="#page-top">
+    <i class="fas fa-angle-up"></i>
+  </a>
+
+  <!-- Logout Modal-->
+  <div class="modal fade" id="logoutModal" tabindex="-1" aria-labelledby="logoutModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="logoutModalLabel">Ready to Leave?</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          Select "Logout" below if you are ready to end your current session.
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-danger">Logout</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Custom JS -->
+  <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+
+  <!-- Bootstrap Bundle JS -->
+  <script src="{{ url_for('static', filename='node_modules/bootstrap/dist/js/bootstrap.bundle.js') }}"></script>
+
+  <!-- jQuery -->
+  <script src="{{ url_for('static', filename='node_modules/jquery/dist/jquery.js') }}"></script>
+
+  <!-- SBAdmin2 JS -->
+  <script src="{{ url_for('static', filename='js/sbadmin2.js') }}"></script>
+
+  <!-- FontAwesome JS -->
+  <script src="{{ url_for('static', filename='node_modules/@fortawesome/fontawesome-free/js/all.js') }}"></script>
+</body>
+
+</html>
