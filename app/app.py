@@ -3,6 +3,7 @@ import sqlite3
 from config import Config, db , cwd
 import os
 from utilities import banner
+from routes import *
 
 # Initialize the Flask app
 app = Flask(__name__)
@@ -11,6 +12,10 @@ app.config.from_object(Config)
 
 # Initialize SQLAlchemy with the Flask app
 db.init_app(app)
+
+
+# Register the Blueprint
+app.register_blueprint(dashboard.dashboard_bp)
 
 @app.route("/", methods=['GET', 'POST'])
 def index():
@@ -30,7 +35,7 @@ def index():
 
         if user:
             # If authentication is successful, store user data in the session
-            session['username'] = user[0]  # Assuming the username is in the first column
+            session['username'] = user[1]  # Assuming the username is in the first column
             session['logged_in'] = True
             conn.close()
             return redirect('/dashboard')
@@ -38,7 +43,7 @@ def index():
         # Authentication failed, show error message
         error_message = 'Invalid username or password'
         conn.close()
-        return render_template('login.html', error_message=error_message)
+        return render_template('index.html', error_message=error_message )
   return render_template("index.html")
 
 if __name__ == '__main__':
